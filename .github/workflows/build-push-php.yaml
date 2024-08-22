@@ -1,0 +1,18 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: agon-mustafa/shared-workflows/.github/workflows/build-push-docker-hub-template.yaml@main
+    with:
+      working_directory: ./php
+      image_repository: agonmustafa/docker-labs
+      image_tag: php-example
+    secrets:
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_PAT: ${{ secrets.DOCKER_HUB_PAT }}
+
