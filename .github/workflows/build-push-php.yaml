@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build and Push PHP Docker Image
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  build-php-image:
     uses: agon-mustafa/shared-workflows/.github/workflows/build-push-docker-hub-template.yaml@main
     with:
       working_directory: ./php
@@ -15,4 +15,3 @@ jobs:
     secrets:
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       DOCKER_HUB_PAT: ${{ secrets.DOCKER_HUB_PAT }}
-
