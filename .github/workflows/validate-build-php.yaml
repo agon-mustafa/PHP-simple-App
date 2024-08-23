@@ -9,7 +9,7 @@ jobs:
   validate:
     uses: agon-mustafa/shared-workflows/.github/workflows/validate-build-template.yaml@main
     with:
-      working_directory: ./php
+      working_directory: .  # Updated path
       image_repository: agonmustafa/docker-labs
       image_tag: php-example
     secrets:
