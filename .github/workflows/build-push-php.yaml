@@ -17,6 +17,7 @@ jobs:
 
       - name: Build Docker image
         run: |
+          echo "Building Docker image..."
           docker buildx build \
             --file ./Dockerfile \
             --tag ${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }} \
@@ -26,9 +27,16 @@ jobs:
           IMAGE_REPOSITORY: agonmustafa/docker-labs
           IMAGE_TAG: php-example
 
+      - name: List Docker images
+        run: docker images
+
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_HUB_PAT }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Push Docker image
         run: |
+          echo "Pushing Docker image..."
           docker push ${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }}
+        env:
+          IMAGE_REPOSITORY: agonmustafa/docker-labs
+          IMAGE_TAG: php-example
