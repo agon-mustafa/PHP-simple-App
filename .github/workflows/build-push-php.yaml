@@ -19,20 +19,16 @@ jobs:
         run: |
           docker buildx build \
             --file ./Dockerfile \
-            --tag ${{ secrets.IMAGE_REPOSITORY }}:${{ secrets.IMAGE_TAG }} \
+            --tag ${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }} \
             --load \
             .
+        env:
+          IMAGE_REPOSITORY: agonmustafa/docker-labs
+          IMAGE_TAG: php-example
 
       - name: Log in to Docker Hub
         run: echo ${{ secrets.DOCKER_HUB_PAT }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Push Docker image
         run: |
-          docker push ${{ secrets.IMAGE_REPOSITORY }}:${{ secrets.IMAGE_TAG }}
-
-    env:
-      IMAGE_REPOSITORY: agonmustafa/docker-labs
-      IMAGE_TAG: php-example
-    secrets:
-      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-      DOCKER_HUB_PAT: ${{ secrets.DOCKER_HUB_PAT }}
+          docker push ${{ env.IMAGE_REPOSITORY }}:${{ env.IMAGE_TAG }}
