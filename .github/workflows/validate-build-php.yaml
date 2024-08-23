@@ -15,4 +15,3 @@ jobs:
     secrets:
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       DOCKER_HUB_PAT: ${{ secrets.DOCKER_HUB_PAT }}
-      SHARED_WORKFLOWS_PAT: ${{ secrets.SHARED_WORKFLOWS_PAT }}  # Add this line to access the shared workflows
