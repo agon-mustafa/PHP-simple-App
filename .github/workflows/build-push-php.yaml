@@ -7,9 +7,30 @@ on:
 
 jobs:
   build-php-image:
-    uses: agon-mustafa/shared-workflows/.github/workflows/build-push-docker-hub-template.yaml@main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image
+        run: |
+          docker buildx build \
+            --file ./Dockerfile \
+            --tag ${{ inputs.image_repository }}:${{ inputs.image_tag }} \
+            --load \
+            .
+
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKER_HUB_PAT }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ inputs.image_repository }}:${{ inputs.image_tag }}
     with:
-      working_directory: .  # Updated path
+      working_directory: .
       image_repository: agonmustafa/docker-labs
       image_tag: php-example
     secrets:
