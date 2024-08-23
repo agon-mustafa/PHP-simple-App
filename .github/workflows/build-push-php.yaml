@@ -19,7 +19,7 @@ jobs:
         run: |
           docker buildx build \
             --file ./Dockerfile \
-            --tag ${{ inputs.image_repository }}:${{ inputs.image_tag }} \
+            --tag ${{ secrets.IMAGE_REPOSITORY }}:${{ secrets.IMAGE_TAG }} \
             --load \
             .
 
@@ -28,11 +28,11 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push ${{ inputs.image_repository }}:${{ inputs.image_tag }}
-    with:
-      working_directory: .
-      image_repository: agonmustafa/docker-labs
-      image_tag: php-example
+          docker push ${{ secrets.IMAGE_REPOSITORY }}:${{ secrets.IMAGE_TAG }}
+
+    env:
+      IMAGE_REPOSITORY: agonmustafa/docker-labs
+      IMAGE_TAG: php-example
     secrets:
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
       DOCKER_HUB_PAT: ${{ secrets.DOCKER_HUB_PAT }}
